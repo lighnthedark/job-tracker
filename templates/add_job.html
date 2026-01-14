@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Add New Job Application</h1>
+
+<form method="POST" style="background: white; padding: 20px; border-radius: 5px;">
+    <div style="margin-bottom: 15px;">
+        <label>Company Name:</label><br>
+        <input type="text" name="company" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label>Position:</label><br>
+        <input type="text" name="position" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label>Date Applied:</label><br>
+        <input type="date" name="date_applied" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label>Status:</label><br>
+        <select name="status" required style="width: 100%; padding: 8px;">
+            <option value="Applied">Applied</option>
+            <option value="Interview">Interview</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label>Notes (optional):</label><br>
+        <textarea name="notes" rows="4" style="width: 100%; padding: 8px;"></textarea>
+    </div>
+
+    <button type="submit"
+        style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Add Job
+    </button>
+    <a href="/" style="margin-left: 10px;">Cancel</a>
+</form>
+{% endblock %}
