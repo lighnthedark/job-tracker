@@ -28,34 +28,27 @@ def index():
     c = conn.cursor()
     c.execute('SELECT * FROM jobs ORDER BY date_applied DESC')
     jobs = c.fetchall()
-    conn.close()
-    return render_template('index.html', jobs=jobs)
-
-@app.route('/add', methods=['GET', 'POST'])
-def add_job():
-    if request.method == 'POST':
-        company = request.form['company']
-        position = request.form['position']
-        date_applied = request.form['date_applied']
-        status = request.form['status']
-        notes = request.form.get('notes', '')
-        
-        conn = sqlite3.connect('jobs.db')
-        c = conn.cursor()
-        c.execute('''
-            INSERT INTO jobs (company, position, date_applied, status, notes)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (company, position, date_applied, status, notes))
-        conn.commit()
-        conn.close()
-        
-        return redirect(url_for('index'))
     
-    return render_template('add_job.html')
-
-
-
-if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    # Calculate stats for dashboard
+    c.execute('SELECT COUNT(*) FROM jobs')
+    total = c.fetchone()[0]
+    c.execute("SELECT COUNT(*) FROM jobs WHERE status = 'Applied'")
+    applied = c.fetchone()[0]
+    c.execute("SELECT COUNT(*) FROM jobs WHERE status = 'Interview'")
+    interview = c.fetchone()[0]
+    c.execute("SELECT COUNT(*) FROM jobs WHERE status = 'Offer'")
+    offer = c.fetchone()[0]
+    c.execute("SELECT COUNT(*) FROM jobs WHERE status = 'Rejected'")
+    rejected = c.fetchone()[0]
+    
+    conn.close()
+    
+    stats = {
+        'total': total,
+        'applied': applied,
+        'interview': interview,
+        'offer': offer,
+        'rejected': rejected
+    }
+    
+    return render_template('index.html', jobs=jobs, stats=stats)

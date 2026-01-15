@@ -1,31 +1,29 @@
 {% extends "base.html" %}
 
+{{% extends "base.html" %}
+
 {% block content %}
 <h1>My Job Applications</h1>
 
-{% if jobs %}
-<table>
-    <tr>
-        <th>Company</th>
-        <th>Position</th>
-        <th>Date Applied</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-    {% for job in jobs %}
-    <tr>
-        <td>{{ job[1] }}</td>
-        <td>{{ job[2] }}</td>
-        <td>{{ job[3] }}</td>
-        <td class="status-{{ job[4].lower() }}">{{ job[4] }}</td>
-        <td>
-            <a href="/update/{{ job[0] }}">Update</a> |
-            <a href="/delete/{{ job[0] }}" onclick="return confirm('Delete this job?')">Delete</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-<p>No jobs tracked yet. <a href="/add">Add your first job application!</a></p>
-{% endif %}
-{% endblock %}
+<div style="display: flex; gap: 15px; margin-bottom: 20px;">
+    <div style="background: #007bff; color: white; padding: 15px 25px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 24px; font-weight: bold;">{{ stats.total }}</div>
+        <div>Total</div>
+    </div>
+    <div style="background: #17a2b8; color: white; padding: 15px 25px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 24px; font-weight: bold;">{{ stats.applied }}</div>
+        <div>Applied</div>
+    </div>
+    <div style="background: #ffc107; color: black; padding: 15px 25px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 24px; font-weight: bold;">{{ stats.interview }}</div>
+        <div>Interview</div>
+    </div>
+    <div style="background: #28a745; color: white; padding: 15px 25px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 24px; font-weight: bold;">{{ stats.offer }}</div>
+        <div>Offer</div>
+    </div>
+    <div style="background: #dc3545; color: white; padding: 15px 25px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 24px; font-weight: bold;">{{ stats.rejected }}</div>
+        <div>Rejected</div>
+    </div>
+</div>
