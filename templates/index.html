@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{{% extends "base.html" %}
-
 {% block content %}
 <h1>My Job Applications</h1>
 
@@ -27,3 +25,30 @@
         <div>Rejected</div>
     </div>
 </div>
+
+{% if jobs %}
+<table>
+    <tr>
+        <th>Company</th>
+        <th>Position</th>
+        <th>Date Applied</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    {% for job in jobs %}
+    <tr>
+        <td>{{ job[1] }}</td>
+        <td>{{ job[2] }}</td>
+        <td>{{ job[3] }}</td>
+        <td class="status-{{ job[4].lower() }}">{{ job[4] }}</td>
+        <td>
+            <a href="/update/{{ job[0] }}">Update</a> |
+            <a href="/delete/{{ job[0] }}" onclick="return confirm('Delete this job?')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No jobs tracked yet. <a href="/add">Add your first job application!</a></p>
+{% endif %}
+{% endblock %}
